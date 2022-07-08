@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Javascript</title>
+    </head>
+    <body>
+        <div style="text-align:center; margin:20%; align-items: center;">
+            <p id="output" style="font-size: 50px;">Temperature</p>
+            <input id="city" style="padding: 10px; margin:10px; border-radius: 10px; border:4px rgb(97, 80, 93) solid;" placeholder="Enter city name">
+            <button onclick="show_temp()" style="padding: 10px; margin:10px; border-radius: 10px; border:4px rgb(74, 67, 73) solid; cursor: pointer; font-size: 15px; font-weight: bold; background-color: aqua;" >Submit</button>
+        </div>
+        <script type="text/javascript">
+            
+            function show_temp(){
+                city = document.getElementById("city").value;
+
+                httpRequest = new XMLHttpRequest();
+                url = "https://api.weatherbit.io/v2.0/current?city="+city+"&key=bc62c934d4d1472ca426785886d8499d"
+                httpRequest.open("GET", url);
+                httpRequest.send();
+
+                httpRequest.onreadystatechange = function(){
+                    if(this.readyState==4 && this.status==200){
+                        city_data = JSON.parse(this.responseText);
+                        document.getElementById("output").innerHTML = city_data.data[0].city_name+" - "+city_data.data[0].temp+" degree";
+                    }
+                }
+            }
+
+            
+        </script>
+    </body>
+</html>
